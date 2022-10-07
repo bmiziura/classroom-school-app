@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/classroom-school-app/static/css/main.e39caf58.css",
+    "main.js": "/classroom-school-app/static/js/main.97b9988e.js",
+    "index.html": "/classroom-school-app/index.html",
+    "main.e39caf58.css.map": "/classroom-school-app/static/css/main.e39caf58.css.map",
+    "main.97b9988e.js.map": "/classroom-school-app/static/js/main.97b9988e.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e39caf58.css",
+    "static/js/main.97b9988e.js"
+  ]
+}
