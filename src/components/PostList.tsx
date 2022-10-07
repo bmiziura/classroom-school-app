@@ -4,7 +4,9 @@ import {
   doc,
   DocumentData,
   getDocs,
+  query,
   QueryDocumentSnapshot,
+  where,
 } from "firebase/firestore"
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
@@ -63,7 +65,7 @@ const PostCard = ({
   )
 }
 
-const PostList = () => {
+const PostList = ({ searchText }: { searchText?: string }) => {
   const [posts, setPosts] = useState<QueryDocumentSnapshot<DocumentData>[]>()
 
   const postsCollection = collection(db, "posts")
@@ -74,7 +76,11 @@ const PostList = () => {
 
   useEffect(() => {
     const getPosts = async () => {
-      const data = await getDocs(postsCollection)
+      const data = await getDocs(
+        searchText
+          ? query(postsCollection, where("title", ">=", searchText))
+          : postsCollection
+      )
 
       setPosts(data.docs)
     }
@@ -85,6 +91,9 @@ const PostList = () => {
   return (
     <div className="container mx-auto">
       <div className="grid grid-cols-1 lg:grid-cols-3 auto-rows-fr gap-4">
+        {posts && posts.length === 0 && (
+          <div>No posts with such criteria were found!</div>
+        )}
         {posts?.map((doc) => (
           <PostCard
             key={doc.id}
