@@ -27,6 +27,8 @@ const NewPostPage = () => {
 
     setLoading(true)
 
+    const searchCriteria = {}
+
     const doc = await addDoc(postsCollection, {
       title,
       content,

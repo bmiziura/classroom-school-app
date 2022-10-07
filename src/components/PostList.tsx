@@ -78,15 +78,21 @@ const PostList = ({ searchText }: { searchText?: string }) => {
     const getPosts = async () => {
       const data = await getDocs(
         searchText
-          ? query(postsCollection, where("title", ">=", searchText))
+          ? query(
+              postsCollection,
+              where("title", ">=", searchText),
+              where("title", "<=", searchText + "z")
+            )
           : postsCollection
       )
+
+      console.log(data.docs)
 
       setPosts(data.docs)
     }
 
     getPosts()
-  }, [])
+  }, [searchText])
 
   return (
     <div className="container mx-auto">
