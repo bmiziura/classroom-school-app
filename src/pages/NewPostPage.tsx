@@ -31,7 +31,7 @@ const NewPostPage = () => {
       title,
       content,
       author: {
-        name: user?.displayName,
+        name: !user?.displayName ? user?.email : user?.displayName,
         id: user?.uid,
       },
     })
