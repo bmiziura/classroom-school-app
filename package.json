@@ -1,6 +1,6 @@
 {
-  "homepage": "https://goblicpl.github.io/classroom-school-app",
-  "name": "classroom-school-app",
+  "homepage": "https://goblicpl.github.io/react-firebase-blog",
+  "name": "react-firebase-blog",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

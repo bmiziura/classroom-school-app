@@ -27,8 +27,6 @@ const NewPostPage = () => {
 
     setLoading(true)
 
-    const searchCriteria = {}
-
     const doc = await addDoc(postsCollection, {
       title,
       content,
@@ -63,6 +61,8 @@ const NewPostPage = () => {
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 className="border rounded-md border-gray-500 placeholder-gray-500 p-2"
+                pattern="[A-Za-zżźćńółęąśŻŹĆĄŚĘŁÓŃ0-9 ]{5,30}"
+                required
               />
             </label>
 
@@ -73,6 +73,7 @@ const NewPostPage = () => {
                 value={content}
                 onChange={(e) => setContent(e.target.value)}
                 className="border rounded-md border-gray-500 placeholder-gray-500 p-2"
+                required
               ></textarea>
             </label>
 
