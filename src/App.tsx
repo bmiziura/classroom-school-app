@@ -3,27 +3,29 @@ import ProtectedRoute from "./components/ProtectedRoute"
 import AuthContextProvider from "./contexts/AuthContext"
 import HomePage from "./pages/HomePage"
 import LoginPage from "./pages/LoginPage"
+import NewPostPage from "./pages/NewPostPage"
+import RegisterPage from "./pages/RegisterPage"
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: (
-      <ProtectedRoute>
-        <HomePage />
-      </ProtectedRoute>
-    ),
+    element: <HomePage />,
   },
   {
-    path: "/test",
+    path: "/new-post",
     element: (
       <ProtectedRoute>
-        <div>Test</div>
+        <NewPostPage />
       </ProtectedRoute>
     ),
   },
   {
     path: "/login",
     element: <LoginPage />,
+  },
+  {
+    path: "/register",
+    element: <RegisterPage />,
   },
 ])
 

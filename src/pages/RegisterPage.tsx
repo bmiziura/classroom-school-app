@@ -5,19 +5,19 @@ import { useAuth } from "../contexts/AuthContext"
 
 import { FcGoogle } from "react-icons/fc"
 
-const LoginPage = () => {
+const RegisterPage = () => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [error, setError] = useState("")
 
   const [isLogin, setLogin] = useState(false)
 
-  const { user, signIn, signInWithGoogle } = useAuth()
+  const { user, signInWithGoogle, createUser } = useAuth()
 
   const navigate = useNavigate()
   let [searchParams] = useSearchParams()
 
-  const handleLogin = async (event: FormEvent<HTMLFormElement>) => {
+  const handleRegister = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
     if (isLogin) return
@@ -25,15 +25,15 @@ const LoginPage = () => {
     setLogin(true)
 
     try {
-      await signIn(email, password)
+      await createUser(email, password)
 
       const redirectUrl = searchParams.get("redirectUrl") ?? "/"
 
-      setLogin(false)
       navigate(redirectUrl)
     } catch (error: any) {
-      setLogin(false)
       setError(error.message)
+    } finally {
+      setLogin(false)
     }
   }
 
@@ -46,11 +46,11 @@ const LoginPage = () => {
 
       const redirectUrl = searchParams.get("redirectUrl") ?? "/"
 
+      setLogin(false)
       navigate(redirectUrl)
     } catch (error: any) {
-      setError(error.message)
-    } finally {
       setLogin(false)
+      setError(error.message)
     }
   }
 
@@ -66,7 +66,7 @@ const LoginPage = () => {
 
       <div className="w-screen h-screen flex items-center justify-center">
         <div className="w-full max-w-[500px] flex flex-col gap-4 items-center bg-white p-4 py-16">
-          <h1 className="text-3xl font-bold text-center">Log In</h1>
+          <h1 className="text-3xl font-bold text-center">Register</h1>
 
           <button
             className="w-full max-w-[300px] border px-4 py-2 rounded-md flex gap-2 items-center justify-center font-bold hover:bg-slate-50"
@@ -80,7 +80,7 @@ const LoginPage = () => {
           <p>Or</p>
 
           <form
-            onSubmit={handleLogin}
+            onSubmit={handleRegister}
             className="w-full max-w-[300px] flex flex-col gap-4"
           >
             <label className="flex flex-col">
@@ -111,22 +111,15 @@ const LoginPage = () => {
             {error && <span className="text-red-500">{error}</span>}
 
             <p>
-              Don't have an account?{" "}
-              <Link
-                to={`/register${
-                  searchParams.get("redirectUrl")
-                    ? `?redirectUrl=${searchParams.get("redirectUrl")}`
-                    : ""
-                }`}
-                className="font-bold hover:underline"
-              >
-                Create Account
+              Already have an account?{" "}
+              <Link to="/register" className="font-bold hover:underline">
+                Log In
               </Link>
             </p>
 
             <button
               type="submit"
-              name="Sign In"
+              name="Register"
               className="border bg-blue-500 text-white font-bold py-2 px-4 rounded-md disabled:bg-gray-500"
               disabled={isLogin}
             >
@@ -139,4 +132,4 @@ const LoginPage = () => {
   )
 }
 
-export default LoginPage
+export default RegisterPage

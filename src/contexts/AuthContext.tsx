@@ -1,6 +1,9 @@
 import {
+  createUserWithEmailAndPassword,
+  GoogleAuthProvider,
   onAuthStateChanged,
   signInWithEmailAndPassword,
+  signInWithPopup,
   signOut as logOut,
   User,
   UserCredential,
@@ -10,6 +13,8 @@ import { auth } from "../firebase"
 
 export interface AuthContextParams {
   signIn: (email: string, password: string) => Promise<UserCredential>
+  signInWithGoogle: () => Promise<UserCredential>
+  createUser: (email: string, password: string) => Promise<UserCredential>
   signOut: () => Promise<void>
   user: User | null
 }
@@ -29,6 +34,16 @@ const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     return signInWithEmailAndPassword(auth, email, password)
   }
 
+  const signInWithGoogle = () => {
+    const provider = new GoogleAuthProvider()
+
+    return signInWithPopup(auth, provider)
+  }
+
+  const createUser = (email: string, password: string) => {
+    return createUserWithEmailAndPassword(auth, email, password)
+  }
+
   const signOut = () => {
     return logOut(auth)
   }
@@ -43,6 +58,8 @@ const AuthContextProvider = ({ children }: { children: ReactNode }) => {
 
   const value: AuthContextParams = {
     signIn,
+    signInWithGoogle,
+    createUser,
     signOut,
     user,
   }

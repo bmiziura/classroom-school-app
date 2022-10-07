@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom"
+import Header from "../components/Header"
 import { useAuth } from "../contexts/AuthContext"
 
 const HomePage = () => {
@@ -14,6 +15,8 @@ const HomePage = () => {
 
   return (
     <div>
+      <Header />
+
       <h1>HomePage</h1>
       <p>User: {user?.email}</p>
       <button onClick={() => handleSignOut()}>Sign Out</button>
