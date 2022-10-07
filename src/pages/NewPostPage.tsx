@@ -2,7 +2,11 @@ import { FormEvent, useState } from "react"
 
 import Header from "../components/Header"
 
+import { addDoc, collection } from "firebase/firestore"
 import { CgSpinner } from "react-icons/cg"
+import { useNavigate } from "react-router-dom"
+import { useAuth } from "../contexts/AuthContext"
+import { db } from "../firebase"
 
 const NewPostPage = () => {
   const [title, setTitle] = useState("")
@@ -10,8 +14,31 @@ const NewPostPage = () => {
 
   const [isLoading, setLoading] = useState(false)
 
+  const { user } = useAuth()
+
+  const postsCollection = collection(db, "posts")
+
+  const navigate = useNavigate()
+
   const handlePost = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
+
+    if (isLoading) return
+
+    setLoading(true)
+
+    const doc = await addDoc(postsCollection, {
+      title,
+      content,
+      author: {
+        name: user?.displayName,
+        id: user?.uid,
+      },
+    })
+
+    setLoading(false)
+
+    navigate(`/post/${doc.id}`)
   }
 
   return (
