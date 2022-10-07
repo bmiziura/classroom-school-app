@@ -112,7 +112,14 @@ const RegisterPage = () => {
 
             <p>
               Already have an account?{" "}
-              <Link to="/register" className="font-bold hover:underline">
+              <Link
+                to={`/login${
+                  searchParams.get("redirectUrl")
+                    ? `?redirectUrl=${searchParams.get("redirectUrl")}`
+                    : ""
+                }`}
+                className="font-bold hover:underline"
+              >
                 Log In
               </Link>
             </p>

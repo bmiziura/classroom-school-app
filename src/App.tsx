@@ -1,4 +1,5 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
+import ProtectedRoute from "./components/ProtectedRoute"
 import AuthContextProvider from "./contexts/AuthContext"
 import HomePage from "./pages/HomePage"
 import LoginPage from "./pages/LoginPage"
@@ -17,7 +18,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/new-post",
-    element: <NewPostPage />,
+    element: (
+      <ProtectedRoute>
+        <NewPostPage />
+      </ProtectedRoute>
+    ),
   },
   {
     path: "/login",
